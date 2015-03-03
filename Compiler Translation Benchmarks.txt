@@ -1,0 +1,24 @@
+Installation and Compilation: http://aesop.ece.umd.edu/aesop_compilation.html
+
+Benchmark Processing - Using CLANF LLVM
+
+1. Prepocessing - Preprocessor directives are tokenized
+ 
+
+clang -E <filename>.c
+
+2. Lexical Analysis - Entire source code is tokenized into Lexemes 
+
+clang -Xclang -dump-tokens <filename>.c
+
+3. Syntax Analysis - Lexems added to the Abstract Syntax Tree(AST) (DeclContext Class is used), preprocessor directives are included in a symbolic table
+
+clang -Xclang -ast-dump <filename>.c
+
+4. Code Generation - Abstract Syntax Trees are converted to LLVM Intermediate Representation (LLVM IR)
+
+clang -O3 -S -emit-llvm <filename>.c -o <filename>.ll
+
+5. Code Optimization, Linking and Assembling - Aesop will ouput wether it has converted the serial code to parallel code
+
+aesopcc -m32 -O3 -I. <filename>.c -o <outputfilename>
